@@ -5,28 +5,10 @@ import "isomorphic-fetch";
 class News extends Component {
   constructor(props) {
     super(props);
-
-    let initialData;
-    if (__isBrowser__) {
-      initialData = window.__initialData__;
-      delete window.__initialData__;
-    } else {
-      initialData = props.staticContext.initialData;
+    if(props.initialData){
+      let initialData = props.initialData
+      this.state = { news: initialData }
     }
-
-    this.state = { news: initialData };
-  }
-
-  componentDidMount() {
-    if (!this.state.news) {
-      News.requestInitialData().then(data => this.setState({ news: data }));
-    }
-  }
-
-  static requestInitialData() {
-    return fetch("http://127.0.0.1:3000/api/news")
-      .then(response => response.json())
-      .catch(error => console.log(error));
   }
 
   render() {
@@ -36,3 +18,9 @@ class News extends Component {
 }
 
 export default News;
+
+// 여기까지만 하면 에러 뜸
+// 마크업이 서버에서 먼저 생겨나긴 하지만 리액트 컴포넌트가 브라우저에서 mount했을때는 데이터가 없음.  
+// 리액트 virtual돔에 그렸을 때 서버의 마크업과 맞지 않는 거임.
+
+// 브라우저에서도 데이터 접근이 가능하도록하는 두 가지 방법이 있음

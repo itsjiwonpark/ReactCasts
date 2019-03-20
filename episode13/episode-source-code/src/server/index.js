@@ -2,11 +2,8 @@ import express from "express";
 import cors from "cors";
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { StaticRouter, matchPath } from "react-router-dom";
-import serialize from "serialize-javascript";
-import routes from "../shared/routes";
-import App from "../shared/App";
-import sourceMapSupport from "source-map-support";
+import News from '../shared/news/News'
+import "isomorphic-fetch"
 
 if (process.env.NODE_ENV === "development") {
   sourceMapSupport.install();
@@ -121,37 +118,26 @@ app.get("/api/news", (req, res) => {
 });
 
 app.get("*", (req, res, next) => {
-  const activeRoute = routes.find(route => matchPath(req.url, route));
-
-  const requestInitialData =
-    activeRoute.component.requestInitialData && activeRoute.component.requestInitialData();
-
-  Promise.resolve(requestInitialData)
+  fetch("http://localhost:3000/api/news")
+    .then(response => response.json())
     .then(initialData => {
-      const context = { initialData };
-      const markup = renderToString(
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      );
+      const markup = renderToString(<News initialData={initialData}/>)
 
       res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>W Combinator</title>
-          <link rel="stylesheet" href="/css/main.css">
-          <script src="/bundle.js" defer></script>
-          <script>window.__initialData__ = ${serialize(initialData)}</script>
-        </head>
-
-        <body>
-          <div id="root">${markup}</div>
-        </body>
-      </html>
-      `);
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>W Combinator</title>
+            <link rel="stylesheet" href="/css/main.css">
+            <script src="/bundle.js" defer></script>
+          </head>
+    
+          <body>
+            <div id="root">${markup}</div>
+          </body>
+        </html>
+      `)
     })
-    .catch(next);
 });
 
 app.listen(process.env.PORT || 3000, () => {

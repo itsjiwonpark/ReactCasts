@@ -15468,7 +15468,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom_server__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom_server__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_App__ = __webpack_require__(271);
-var _jsxFileName = "/Users/cassiozen/Desktop/react-ssr/src/server/index.js",
+var _jsxFileName = '/Users/user/Desktop/study/ReactCasts/episode12/src/server/index.js',
     _this = this;
 
 
@@ -15481,17 +15481,17 @@ var app = __WEBPACK_IMPORTED_MODULE_0_express___default.a();
 app.use(__WEBPACK_IMPORTED_MODULE_0_express___default.a.static("public"));
 
 app.get("*", function (req, res) {
-  res.send("\n      <!DOCTYPE html>\n      <head>\n        <title>Universal Reacl</title>\n        <link rel=\"stylesheet\" href=\"/css/main.css\">\n        <script src=\"/bundle.js\" defer></script>\n      </head>\n\n      <body>\n        <div id=\"root\">" + __WEBPACK_IMPORTED_MODULE_2_react_dom_server__["renderToString"](__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__shared_App__["a" /* default */], {
+  res.send('\n  <!DOCTYPE html>\n  <head>\n    <title>Universal React</title>\n    <link rel="stylesheet" href="/css/main.css">\n    <script src="/bundle.js" defer></script>\n  </head>\n  <body>\n    <div id="Root">' + __WEBPACK_IMPORTED_MODULE_2_react_dom_server__["renderToString"](__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__shared_App__["a" /* default */], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20
+      lineNumber: 19
     },
     __self: _this
-  })) + "</div>\n      </body>\n    </html>\n  ");
+  })) + '</div>\n  </body>\n  </html>\n  ');
 });
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log("Server is listening");
+app.listen(process.env.PORT || 3001, function () {
+  console.log('server is running');
 });
 
 /***/ }),
@@ -48025,7 +48025,7 @@ module.exports = '15.6.1';
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__logo_svg__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__App_css__);
-var _jsxFileName = "/Users/cassiozen/Desktop/react-ssr/src/shared/App.js";
+var _jsxFileName = "/Users/user/Desktop/study/ReactCasts/episode12/src/shared/App.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 

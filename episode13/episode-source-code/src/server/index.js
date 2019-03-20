@@ -2,12 +2,14 @@ import express from "express";
 import cors from "cors";
 import React from "react";
 import { renderToString } from "react-dom/server";
-import News from '../shared/news/News'
+import App from '../shared/App'
+import { StaticRouter, matchPath } from 'react-router-dom'
+import routes from '../shared/routes'
 import "isomorphic-fetch"
 
-if (process.env.NODE_ENV === "development") {
-  sourceMapSupport.install();
-}
+// if (process.env.NODE_ENV === "development") {
+//   sourceMapSupport.install();
+// }
 
 const app = express();
 
@@ -118,11 +120,19 @@ app.get("/api/news", (req, res) => {
 });
 
 app.get("*", (req, res, next) => {
-  fetch("http://localhost:3000/api/news")
-    .then(response => response.json())
+  const currentRoute = routes.find(route => matchPath(req.url, route))
+  const requestInitialData = 
+  currentRoute.component.requestInitialData && currentRoute.component.requestInitialData()
+  
+  // 어떤 데이타여도 then으로 꺼낼 수 있도록
+  Promise.resolve(requestInitialData)
     .then(initialData => {
-      const markup = renderToString(<News initialData={initialData}/>)
-
+      const context = {initialData}
+      const markup = renderToString(
+      <StaticRouter location={req.url} context={context}>
+        <App />
+      </StaticRouter>
+      )
       res.send(`
         <!DOCTYPE html>
         <html>
@@ -130,8 +140,8 @@ app.get("*", (req, res, next) => {
             <title>W Combinator</title>
             <link rel="stylesheet" href="/css/main.css">
             <script src="/bundle.js" defer></script>
+            <script>window.__initialData__ = ${JSON.stringify(initialData)}</script>
           </head>
-    
           <body>
             <div id="root">${markup}</div>
           </body>

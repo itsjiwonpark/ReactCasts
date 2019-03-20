@@ -1,15 +1,16 @@
-import News from "./news/News";
+import Home from "./home/Home"
+import News from "./news/News"
 
 const routes = [
-  // {
-  //   path: "/",
-  //   exact: true,
-  //   component: Home
-  // },
   {
     path: "/",
+    component: Home,
+    exact: true
+  },
+  {
+    path: "/news",
     component: News
   }
-];
+]
 
-export default routes;
+export default routes
